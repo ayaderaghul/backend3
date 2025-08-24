@@ -21,8 +21,8 @@ model User {
   password_hash String
   created_at    DateTime  @default(now())
   tweets        Tweet[]
-  folowers      Follow[]  @relation("followers")
-  following     Follow[]  @relation("following")
+  followers     Follow[]  @relation("UserFollowers")
+  followees     Follow[]  @relation("UserFollowees")
 }
 
 model Tweet {
@@ -40,8 +40,8 @@ model Follow {
   followee_id   String
   created_at    DateTime  @default(now())
 
-  follower User @relation("following", fields: [follower_id], references: [id])
-  followee User @relation("followers", fields: [followee_id], references: [id])
+  follower User @relation("UserFollowees", fields: [follower_id], references: [id])
+  followee User @relation("UserFollowers", fields: [followee_id], references: [id])
 
   @@id([follower_id, followee_id])
 }

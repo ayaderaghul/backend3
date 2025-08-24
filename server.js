@@ -1,5 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
+import cors from 'cors'
 import prisma from './src/db.js'
 import authRouter from './routes/auth.js'
 import tweetRouter from './routes/tweet.js'
@@ -11,6 +12,10 @@ import {authMiddleware} from './middleware/auth.js'
 dotenv.config()
 
 const app = express()
+app.use(cors({
+  origin: "http://localhost:5173", // your frontend URL
+  credentials: true                // if you send cookies/auth headers
+}))
 app.use(express.json())
 
 app.get('/ping', (req, res) => {
